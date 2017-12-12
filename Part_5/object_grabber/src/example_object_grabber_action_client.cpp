@@ -25,6 +25,8 @@
 #include <xform_utils/xform_utils.h>
 #include <object_manipulation_properties/object_ID_codes.h>
 #include<generic_gripper_services/genericGripperInterface.h>
+#include <std_msgs/Float64.h>
+#include <baxter_core_msgs/EndEffectorCommand.h>
 
 using namespace std;
 XformUtils xformUtils; //type conversion utilities
@@ -32,6 +34,7 @@ XformUtils xformUtils; //type conversion utilities
 int g_object_grabber_return_code;
 actionlib::SimpleActionClient<object_grabber::object_grabberAction> *g_object_grabber_ac_ptr;
 bool g_got_callback = false;
+
 
 void objectGrabberDoneCb(const actionlib::SimpleClientGoalState& state,
         const object_grabber::object_grabberResultConstPtr& result) {
@@ -59,7 +62,14 @@ void set_example_object_frames(geometry_msgs::PoseStamped &object_poseStamped,
     object_poseStamped.pose.orientation.z = 0.432841;
     object_poseStamped.pose.orientation.w = 0.899045;
     object_poseStamped.header.stamp = ros::Time::now();
-
+	/*naptime.sleep();
+	gripper_publisher_object.publish(gripper_cmd_open);
+	naptime.sleep();
+	object_poseStamped.pose.position.z = -0.2;
+	naptime.sleep();
+	gripper_publisher_object.publish(gripper_cmd_close);
+	naptime.sleep();
+	*/
     object_dropoff_poseStamped = object_poseStamped; //specify desired drop-off pose of object
     object_dropoff_poseStamped.pose.orientation.z = 1;
     object_dropoff_poseStamped.pose.orientation.w = 0;
@@ -107,6 +117,24 @@ int main(int argc, char** argv) {
     geometry_msgs::PoseStamped object_pickup_poseStamped;
     geometry_msgs::PoseStamped object_dropoff_poseStamped;
     
+    
+   /* ros::NodeHandle n;
+ros::Rate naptime(1.0);
+ros::Publisher gripper_publisher_object = n.advertise<baxter_core_msgs::EndEffectorCommand>("/robot/end_effector/right_gripper/command",1);
+ //define and populate messages for gripper control:
+    baxter_core_msgs::EndEffectorCommand gripper_cmd_open, gripper_cmd_close, configure; 
+    gripper_cmd_open.id = 65538;
+    gripper_cmd_open.sequence = 2;
+    gripper_cmd_open.command ="go";
+    gripper_cmd_open.args = "{\"position\": 100.0}";
+    gripper_cmd_open.sender = "rsdk_gripper_keyboard_go";
+    
+    gripper_cmd_close.command ="go";
+    gripper_cmd_close.id = 65538;
+    gripper_cmd_close.sequence = 3;
+    gripper_cmd_close.args = "{\"position\": 0.0}";
+    gripper_cmd_close.sender = "rsdk_gripper_keyboard_go";
+    */
     //specify object pick-up and drop-off frames using simple test fnc
     //more generally, pick-up comes from perception and drop-off comes from task
     set_example_object_frames(object_pickup_poseStamped, object_dropoff_poseStamped);

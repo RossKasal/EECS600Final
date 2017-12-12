@@ -28,7 +28,7 @@ int main(int argc, char** argv) {
     geometry_msgs::PoseStamped toy_block_poseStamped;
     geometry_msgs::PoseStamped toy_block_dropoff_poseStamped;
     //hard code an object pose; later, this will come from perception
-    toy_block_poseStamped.header.frame_id = "torso"; //set approach pose for toy block
+    toy_block_poseStamped.header.frame_id = "base"; //set approach pose for toy block
     toy_block_poseStamped.pose.position.x = 0.5;
     toy_block_poseStamped.pose.position.y = -0.35;
     toy_block_poseStamped.pose.position.z = -0.125; //specify block frame w/rt torso frame

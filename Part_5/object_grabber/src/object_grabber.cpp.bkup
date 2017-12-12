@@ -140,7 +140,7 @@ int ObjectGrabber::grasp_from_above(geometry_msgs::PoseStamped block_pose_wrt_to
 
     //start w/ move from current pose to approach pose:
     int planner_rtn_code, execute_return_code;
-    des_flange_approach_pose.header.frame_id = "torso";
+    des_flange_approach_pose.header.frame_id = "base";
     des_flange_approach_pose.pose = xformUtils.transformEigenAffine3dToPose(a_flange_approach_);
 
     planner_rtn_code = armMotionCommander.rt_arm_plan_path_current_to_goal_flange_pose(des_flange_approach_pose);
@@ -166,7 +166,7 @@ int ObjectGrabber::grasp_from_above(geometry_msgs::PoseStamped block_pose_wrt_to
     // make a careful descent to grasp pose:
      //plan path to grasp pose:
     ROS_INFO("planning hi-res descent to grasp pose");
-    des_flange_grasp_pose.header.frame_id = "torso";
+    des_flange_grasp_pose.header.frame_id = "base";
     des_flange_grasp_pose.pose = xformUtils.transformEigenAffine3dToPose(a_flange_grasp_);    
     planner_rtn_code=armMotionCommander.rt_arm_plan_fine_path_current_to_goal_flange_pose(des_flange_grasp_pose); 
     if (planner_rtn_code == cartesian_planner::baxter_cart_moveResult::SUCCESS)  { 
@@ -292,7 +292,7 @@ int ObjectGrabber::vertical_cylinder_power_grasp(geometry_msgs::PoseStamped obje
 
     //start w/ a jnt-space move from current pose to approach pose:
     int planner_rtn_code;
-    des_flange_approach_pose.header.frame_id = "torso";
+    des_flange_approach_pose.header.frame_id = "base";
     des_flange_approach_pose.pose = xformUtils.transformEigenAffine3dToPose(flange_approach_affine);
     planner_rtn_code = armMotionCommander.rt_arm_plan_path_current_to_goal_flange_pose(des_flange_approach_pose);
     if (planner_rtn_code == cartesian_planner::baxter_cart_moveResult::SUCCESS)  { 
@@ -307,7 +307,7 @@ int ObjectGrabber::vertical_cylinder_power_grasp(geometry_msgs::PoseStamped obje
 
     //slide to can:
     ROS_INFO("planning hi-res approach to grasp pose");
-    des_flange_grasp_pose.header.frame_id = "torso";
+    des_flange_grasp_pose.header.frame_id = "base";
     des_flange_grasp_pose.pose = xformUtils.transformEigenAffine3dToPose(flange_grasp_affine);
     planner_rtn_code=armMotionCommander.rt_arm_plan_fine_path_current_to_goal_flange_pose(des_flange_grasp_pose);
        //optionally, rescale this path to slow it down:
@@ -340,7 +340,7 @@ int ObjectGrabber::vertical_cylinder_power_grasp(geometry_msgs::PoseStamped obje
     ros::Duration(1).sleep(); //some extra settling time for grasp
 
     //depart vertically:
-    des_flange_depart_pose.header.frame_id = "torso";
+    des_flange_depart_pose.header.frame_id = "base";
     des_flange_depart_pose.pose = xformUtils.transformEigenAffine3dToPose(flange_depart_affine);
     planner_rtn_code = armMotionCommander.rt_arm_plan_path_current_to_goal_flange_pose(des_flange_depart_pose);
     if (planner_rtn_code == cartesian_planner::baxter_cart_moveResult::SUCCESS)  { 
@@ -369,7 +369,7 @@ void ObjectGrabber::executeCB(const actionlib::SimpleActionServer<object_grabber
     while(!valid_tf) {
     try 
     {
-      tfListener.transformPose("torso", object_pose_stamped_, object_pose_stamped_wrt_torso_);
+      tfListener.transformPose("base", object_pose_stamped_, object_pose_stamped_wrt_torso_);
       valid_tf=true;
     }
     catch (tf::TransformException &ex) 

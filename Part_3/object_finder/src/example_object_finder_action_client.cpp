@@ -31,9 +31,7 @@ void objectFinderDoneCb(const actionlib::SimpleClientGoalState& state,
          ROS_INFO("got pose x,y,z = %f, %f, %f",g_perceived_object_pose.pose.position.x,
                  g_perceived_object_pose.pose.position.y,
                  g_perceived_object_pose.pose.position.z);
-         x1 = g_perceived_object_pose.pose.position.x;
-		 y1 = g_perceived_object_pose.pose.position.y;
-		 z1 = g_perceived_object_pose.pose.position.z;
+   
          ROS_INFO("got quaternion x,y,z, w = %f, %f, %f, %f",g_perceived_object_pose.pose.orientation.x,
                  g_perceived_object_pose.pose.orientation.y,
                  g_perceived_object_pose.pose.orientation.z,

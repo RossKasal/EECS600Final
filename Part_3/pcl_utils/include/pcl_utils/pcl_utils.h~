@@ -77,7 +77,7 @@ public:
      * Affine type "f" is needed for use with point clouds, since "floats" not "doubles" are more practical, considering
      * the expected (limited) resolution of the sensor, as well as the large size of point clouds
      */ // @param t  [in] provide a transform, e.g. per:
-        //  g_tfListenerPtr->lookupTransform("base", "kinect_pc_frame", ros::Time(0), tf_sensor_frame_to_torso_frame);
+          g_tfListenerPtr->lookupTransform("base", "kinect_pc_frame", ros::Time(0), tf_sensor_frame_to_torso_frame);
      /* @return an Eigen Affine object, A, such that point_in_new_frame = A*point_in_original_frame
      */    
     Eigen::Affine3f transformTFToEigen(const tf::Transform &t);

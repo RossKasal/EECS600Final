@@ -25,7 +25,7 @@ int main(int argc, char** argv) {
     geometry_msgs::PoseStamped toy_block_poseStamped, cylinder_poseStamped, desired_toolflange_poseStamped;
     geometry_msgs::PoseStamped toy_block_dropoff_poseStamped, cylinder_dropoff_poseStamped;
     //hard code an object pose; later, this will come from perception
-    toy_block_poseStamped.header.frame_id = "torso"; //set approach pose for toy block
+    toy_block_poseStamped.header.frame_id = "base"; //set approach pose for toy block
     toy_block_poseStamped.pose.position.x = 0.5;
     toy_block_poseStamped.pose.position.y = -0.35;
     toy_block_poseStamped.pose.position.z = -0.125; //specify block frame w/rt torso frame
@@ -45,7 +45,7 @@ int main(int argc, char** argv) {
     //debug:
     //toy_block_dropoff_poseStamped= toy_block_poseStamped; //put it back where it was
 
-    cylinder_poseStamped.header.frame_id = "torso"; //set approach pose for cylinder
+    cylinder_poseStamped.header.frame_id = "base"; //set approach pose for cylinder
     cylinder_poseStamped.pose.position.x = 0.8;
     cylinder_poseStamped.pose.position.y = 0;
     cylinder_poseStamped.pose.position.z = -0.05; //should be center of upright cylinder
